@@ -1,3 +1,0 @@
-USER=<USER_NAME>
-GROUP=<GROUP_NAME>
-DATA_PATH=/home/$USER/.sickrage
