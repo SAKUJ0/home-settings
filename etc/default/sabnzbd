@@ -1,0 +1,21 @@
+# This file is sourced by /etc/init.d/sabnzbdplus
+#
+# When SABnzbd+ is started using the init script, the
+# --daemon option is always used, and the program is
+# started under the account of $USER, as set below.
+#
+# Each setting is marked either "required" or "optional";
+# leaving any required setting unconfigured will cause
+# the service to not start.
+
+# [required] user or uid of account to run the program as:
+USER=<USER_NAME>
+HOST=192.168.0.91
+PORT=8080
+
+CONFIG=/home/$USER/.sabnzbd/sabnzbd.ini
+
+# Important to quit SAB properly
+SABLOGIN=<SAB_USER_NAME>
+SABPASSWORD=<SAB_PASSWORD>
+SABAPI=<SAB_API_KEY>

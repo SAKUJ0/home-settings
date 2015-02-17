@@ -1,0 +1,5 @@
+# startup args
+DAEMON_OPTS=" /usr/local/bin/kodi --standalone -- :0"
+
+# user
+USER=<USER_NAME>

@@ -1,0 +1,25 @@
+<advancedsettings>
+  <videodatabase>
+    <type>mysql</type>
+    <host>192.168.0.91</host>
+    <port>3306</port>
+    <user>kodi</user>
+    <pass><MYSQL_PASSWORD></pass>
+  </videodatabase> 
+  <musicdatabase>
+    <type>mysql</type>
+    <host>192.168.0.91</host>
+    <port>3306</port>
+    <user>kodi</user>
+    <pass><MYSQL_PASSWORD></pass>
+  </musicdatabase>
+  <videolibrary>
+    <importwatchedstate>true</importwatchedstate>
+    <importresumepoint>true</importresumepoint>
+  </videolibrary>
+  <network>
+    <buffermode>1</buffermode>
+    <cachemembuffersize>200000000</cachemembuffersize>
+    <readbufferfactor>2</readbufferfactor>
+  </network>
+</advancedsettings>

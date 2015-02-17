@@ -1,0 +1,77 @@
+#!/bin/sh
+# kFreeBSD do not accept scripts as interpreters, using #!/bin/sh and sourcing.
+if [ true != "$INIT_D_SCRIPT_SOURCED" ] ; then
+    set "$0" "$@"; INIT_D_SCRIPT_SOURCED=true . /lib/init/init-d-script
+fi
+### BEGIN INIT INFO
+# Provides:          sabnzbd
+# Required-Start:    $local_fs $remote_fs
+# Required-Stop:     $local_fs $remote_fs
+# Should-Start:      dbus avahi nfs-kernel-server kodi
+# Should-Stop:       dbus avahi nfs-kernel-server kodi
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: SABnzbd+ binary newsgrabber
+# Description:       SABnzbd+ is a web-based binary newsgrabber with nzb
+#                    support, designed to download files from Usenet.
+#                    This script provides that functionality as a system
+#                    service, starting the program on boot.
+### END INIT INFO
+
+# Modified by: Orkun Sensebat <ihate88@gmail.com>
+#
+# Please remove the "Author" lines above and replace them
+# with your own name if you copy and modify this script.
+
+NAME=sabnzbd
+DAEMON=/opt/sabnzbd/SABnzbd.py
+DESC="SABnzbd+ binary newsgrabber"
+
+PID_FILE="/var/run/$NAME.pid"
+
+test -x $DAEMON || exit 0
+
+if test -f /etc/default/$NAME; then 
+  . /etc/default/$NAME
+fi
+
+DAEMON_OPTS=" -f $CONFIG --daemon"
+
+. /lib/lsb/init-functions
+
+case "$1" in
+  start)
+        log_daemon_msg "Starting $DESC" || true
+        if /usr/bin/sudo -u $USER -H $DAEMON $DAEMON_OPTS; then
+                log_end_msg 0 || true
+        else
+                log_end_msg 1 || true
+        fi
+        ;;
+  stop)
+        log_daemon_msg "Stopping $DESC" || true
+        if /usr/bin/wget -q --delete-after "http://$HOST:$PORT/sabnzbd/api?mode=shutdown&ma_username=$SABLOGIN&ma_password=$SABPASSWORD&apikey=$SABAPI";
+ then
+            	log_end_msg 0 || true
+        else
+            	log_end_msg 1 || true
+        fi
+        ;;
+  restart|force-reload)
+        log_daemon_msg "Restarting $DESC" || true
+	/usr/bin/wget -q --delete-after "http://$HOST:$PORT/sabnzbd/api?mode=shutdown&ma_username=$SABLOGIN&ma_password=$SABPASSWORD&apikey=$SABAPI"
+	sleep 5
+        if /usr/bin/sudo -u $USER -H $DAEMON $DAEMON_OPTS; then
+            	log_end_msg 0 || true
+        else
+            	log_end_msg 1 || true
+        fi
+        ;;
+  *)
+        N=/etc/init.d/$NAME
+        log_action_msg "Usage: $N {start|stop|restart|force-reload}" || true
+        exit 1
+        ;;
+esac
+
+exit 0
