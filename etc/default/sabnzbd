@@ -1,8 +1,15 @@
-SABNZBD_IP=192.168.0.91
-SABNZBD_PORT=9080
+# Needed to find the installation
 SABNZBD_DIR=/opt/sabnzbd
-SABNZBD_PROTOCOL=https
-SABNZBD_USERNAME=SAKUJ0
-SABNZBD_PASSWORD=UQCoTBk7Ky8keMXnwHEA
-SABNZBD_KEY=0
-SABNZBD_ARGS=-f ${HOME}/.sabnzbd/sabnzbd.ini -s ${SABNZBD_IP}:${SABNZBD_PORT} -d
+SABNZBD_CONFIG=$HOME/.sabnzbd/sabnzbd.ini
+
+# Optional arguments can be added here, 
+SABNZBD_ARGS=
+
+# All these settings are only necessary to stop SABnzbd properly
+# The HTTP port is not the HTTPS port. The HTTPS port will be set
+# in the Web-Interface
+SABNZBD_IP=192.168.0.91
+SABNZBD_HTTP_PORT=8080
+SABNZBD_USERNAME=<YOUR USERNAME>
+SABNZBD_PASSWORD=<YOUR PASSWORD>
+SABNZBD_KEY=<YOUR API KEY>
